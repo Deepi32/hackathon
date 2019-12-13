@@ -51,5 +51,12 @@ public class CustomerSimController {
     return ResponseEntity.ok(customerSimService.showDocuments(customerId));
   }
 
+  @PostMapping(value = "save/documents")
+  public ResponseEntity<?> saveDocuments(@NotNull @RequestParam("customerId") Integer customerId, @RequestParam("isOnArrivalVisa") boolean isOnArrivalVisa) {
+
+    return ResponseEntity.ok(customerSimService.saveDocuments(customerId, isOnArrivalVisa));
+
+  }
+
 
 }
