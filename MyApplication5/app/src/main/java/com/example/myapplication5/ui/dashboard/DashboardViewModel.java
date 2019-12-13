@@ -12,12 +12,15 @@ public class DashboardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     private MutableLiveData<ArrayList<SimDetails>> mSimList;
+    private MutableLiveData<SimDetails> mSelectedSim;
 
     public DashboardViewModel() {
         mText = new MutableLiveData<>();
         mSimList = new MutableLiveData<>();
+        mSelectedSim = new MutableLiveData<>();
         //mText.setValue("This is dashboard fragment");
         //addDummyData();
+        mSelectedSim.setValue(null);
     }
 
     public LiveData<String> getText() {
@@ -34,6 +37,14 @@ public class DashboardViewModel extends ViewModel {
 
     public void setSimList(ArrayList<SimDetails> simList) {
         this.mSimList.setValue(simList);
+    }
+
+    public MutableLiveData<SimDetails> getSelectedSim() {
+        return mSelectedSim;
+    }
+
+    public void setSelectedSim(SimDetails selectedSim) {
+        this.mSelectedSim.setValue(selectedSim);
     }
 
     private void addDummyData() {

@@ -78,4 +78,10 @@ public class SimDetails extends JsonClass {
     public void setValidity(String validity) {
         this.validity = validity;
     }
+
+    public boolean isEmpty() {
+        return (networkProvider == null) || networkProvider.isEmpty()
+                && (price == null || price.isEmpty())
+                && (validity == null || validity.isEmpty());
+    }
 }

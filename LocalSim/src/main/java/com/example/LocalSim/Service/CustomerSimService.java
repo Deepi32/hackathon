@@ -1,15 +1,11 @@
 package com.example.LocalSim.Service;
 
-import com.example.LocalSim.Model.CountryEntity;
-import com.example.LocalSim.Model.CustomerDetailsEntity;
-import com.example.LocalSim.Model.FlightInformationEntity;
-import com.example.LocalSim.Model.SimDetailsEntity;
-import com.example.LocalSim.Repository.CountryRepository;
-import com.example.LocalSim.Repository.CustomerDetailsRepository;
-import com.example.LocalSim.Repository.FlightInformationRepository;
-import com.example.LocalSim.Repository.SimDetailsRepository;
+import com.example.LocalSim.Model.*;
+import com.example.LocalSim.Repository.*;
 import com.example.LocalSim.Response.BaseResponse;
 
+import com.example.LocalSim.Response.DocumentR;
+import com.example.LocalSim.Response.DocumentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerSimService {
@@ -38,6 +35,9 @@ public class CustomerSimService {
 
   @Autowired
   CustomerDetailsRepository customerDetailsRepository;
+
+  @Autowired
+  DocumentRepository documentRepository;
 
 
   public BaseResponse getFlightInformation(String bookingId) {
@@ -89,4 +89,18 @@ public class CustomerSimService {
     }
     return BaseResponse.builder().status(HttpStatus.OK.value()).message("done").build();
   }
+  public BaseResponse showDocuments(Integer customerId) {
+    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer Not found"));
+    List<DocumentEntity> documentEntities = documentRepository.findAllByCountry(customerDetailsEntity.getDestinationTo());
+
+//    List<DocumentR> documentRList=documentEntities.stream().map(documentEntity -> DocumentR.builder().name(documentEntity.getDocumentName()).build()).collect(Collectors.toList());
+    DocumentResponse.DocumentResponseBuilder builder = DocumentResponse.builder().documentRList(documentEntities.stream().map
+            (documentEntity -> {
+              DocumentR documentR=DocumentR.builder().id(documentEntity.getId()).
+                      information(documentEntity.getDocumentInfo()).name(documentEntity.getDocumentName()).build();
+              return documentR;
+            }).collect(Collectors.toList()));
+    return BaseResponse.builder().status(HttpStatus.OK.value()).data(builder).build();
+  }
+
 }

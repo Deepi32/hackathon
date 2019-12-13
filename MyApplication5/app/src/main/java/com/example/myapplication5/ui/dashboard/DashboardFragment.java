@@ -29,6 +29,7 @@ import com.example.myapplication5.model.SimDetails;
 import com.example.myapplication5.ui.home.HomeFragment;
 import com.example.myapplication5.utils.Consts;
 import com.example.myapplication5.utils.ItemListAdapter;
+import com.example.myapplication5.utils.ListItemClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements ListItemClickListener {
 
     private DashboardViewModel dashboardViewModel;
 
@@ -47,9 +48,10 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         final RecyclerView simList = root.findViewById(R.id.sim_list);
-        final ItemListAdapter adapter = new ItemListAdapter();
+        final ItemListAdapter adapter = new ItemListAdapter(DashboardFragment.this);
         simList.setLayoutManager(new LinearLayoutManager(this.getContext()));
         simList.setAdapter(adapter);
+
         dashboardViewModel.getSimList().observe(this, new Observer<ArrayList<SimDetails>>() {
             @Override
             public void onChanged(ArrayList<SimDetails> simDetails) {
@@ -58,12 +60,31 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
-        Button check = root.findViewById(R.id.submit);
+        final Button check = root.findViewById(R.id.submit);
         check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: switch to next screen
+            }
+        });
+
+        final View availableSimCardsText = root.findViewById(R.id.available_sim_cards);
+        availableSimCardsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //getData("http://192.168.0.104:8080/sim/details?countryName=Indonesia");
                 getData(Consts.SERVER_ADDRESS_EMULATOR + "sim/details?countryName=Indonesia");
+            }
+        });
+
+        dashboardViewModel.getSelectedSim().observe(this, new Observer<SimDetails>() {
+            @Override
+            public void onChanged(SimDetails simDetails) {
+                if (simDetails != null && !simDetails.isEmpty()) {
+                    check.setEnabled(true);
+                } else {
+                    check.setEnabled(false);
+                }
             }
         });
         return root;
@@ -144,5 +165,12 @@ public class DashboardFragment extends Fragment {
         //adding the string request to request queue
         requestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onMyListItemClicked(SimDetails simDetails) {
+        if (simDetails != null && !simDetails.isEmpty()) {
+            dashboardViewModel.setSelectedSim(simDetails);
+        }
     }
 }
