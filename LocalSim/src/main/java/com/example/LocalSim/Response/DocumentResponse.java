@@ -10,6 +10,7 @@ import java.util.List;
 public class DocumentResponse {
 
     List<DocumentR> documentRList;
+
     Boolean isOnlineVisa;
 
 }

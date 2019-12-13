@@ -9,4 +9,5 @@ import java.util.List;
 public interface DocumentRepository extends JpaRepository<DocumentEntity,Integer> {
 
     List<DocumentEntity> findAllByCountry(CountryEntity countryEntity);
+
 }

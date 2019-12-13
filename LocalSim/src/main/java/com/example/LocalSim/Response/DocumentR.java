@@ -8,6 +8,7 @@ import lombok.Data;
 public class DocumentR {
 
     Integer id;
+
     String name;
     String information;
 }
