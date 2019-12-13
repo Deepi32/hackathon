@@ -19,6 +19,8 @@ spring:
         format_sql: true
         jdbc:
           batch_size: 10
+          lob:
+            non_contextual_creation: true
         generate-statistics: true
     show-sql: true
   application:
@@ -30,3 +32,4 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+

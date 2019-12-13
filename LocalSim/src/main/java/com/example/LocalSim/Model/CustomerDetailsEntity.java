@@ -3,6 +3,7 @@ package com.example.LocalSim.Model;
 
 
 import com.example.LocalSim.Enum.PaymentStatus;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "customer_sim_details")
-public class CustomerSimDetailsEntity extends AbstractEntity {
+@Table(name = "customer_details")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+
+public class CustomerDetailsEntity extends AbstractEntity {
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "flight_id")
@@ -26,10 +33,21 @@ public class CustomerSimDetailsEntity extends AbstractEntity {
   @JoinColumn(name = "sim_id")
   private SimDetailsEntity simDetails;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "destination_to")
+  private CountryEntity destinationTo;
+
   @Enumerated(EnumType.STRING)
   @Column(name = "payment_status")
   private PaymentStatus paymentStatus;
 
+  @Column(name="payment_amount")
+  private String paymentAmount;
+
   @Column(name = "is_document_upload")
   private Boolean isDocumentUpload;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="user_id")
+  private UserEntity userEntity;
 }

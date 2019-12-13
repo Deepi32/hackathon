@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface FlightInformationRepository extends JpaRepository<FlightInformationEntity,Integer> {
 
-    Optional<FlightInformationEntity> findByPnrNo(String pnrNo);
+    Optional<FlightInformationEntity> findByBookingId(String bookingId);
 }

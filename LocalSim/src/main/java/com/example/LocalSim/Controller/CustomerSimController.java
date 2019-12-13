@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -24,9 +25,9 @@ public class CustomerSimController {
   CustomerSimService customerSimService;
 
   @GetMapping("flight")
-  public ResponseEntity<?> getFlightInformation(@RequestParam(name = "pnrNo") String pnrNo) {
+  public ResponseEntity<?> getFlightInformation(@RequestParam(name = "bookingId") String bookingId) {
 
-    return ResponseEntity.ok(customerSimService.getFlightInformation(pnrNo));
+    return ResponseEntity.ok(customerSimService.getFlightInformation(bookingId));
   }
 
   @GetMapping("sim/details")
@@ -41,6 +42,13 @@ public class CustomerSimController {
     return ResponseEntity.ok(customerSimService.uploadDocumentsInFolder(files,servletRequest,customerId));
 
 
+  }
+
+  @GetMapping("document/details")
+  public ResponseEntity<?> showDocuments(@NotNull @RequestParam("customerId") Integer customerId)
+  {
+
+    return ResponseEntity.ok(customerSimService.showDocuments(customerId));
   }
 
 
