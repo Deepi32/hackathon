@@ -51,7 +51,7 @@ public class CustomerDetailsEntity extends AbstractEntity {
   private Boolean isOnArrivalVisa;
 
   @Column(name="verification_code")
-  private Long verificationCode;
+  private String verificationCode;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="user_id")
