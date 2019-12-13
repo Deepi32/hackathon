@@ -24,9 +24,9 @@ public class CustomerSimController {
   CustomerSimService customerSimService;
 
   @GetMapping("flight")
-  public ResponseEntity<?> getFlightInformation(@RequestParam(name = "pnrNo") String pnrNo) {
+  public ResponseEntity<?> getFlightInformation(@RequestParam(name = "bookingId") String bookingId) {
 
-    return ResponseEntity.ok(customerSimService.getFlightInformation(pnrNo));
+    return ResponseEntity.ok(customerSimService.getFlightInformation(bookingId));
   }
 
   @GetMapping("sim/details")

@@ -28,4 +28,7 @@ public class DocumentEntity extends AbstractEntity {
 
   @Column(name = "document_name")
   private String documentName;
+
+  @Column(name="document_info")
+  private String documentInfo;
 }
