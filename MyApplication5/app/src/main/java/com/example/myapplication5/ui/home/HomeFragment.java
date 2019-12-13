@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication5.R;
+import com.example.myapplication5.utils.Consts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +46,8 @@ public class HomeFragment extends Fragment {
         });
 
         final EditText editText = root.findViewById(R.id.booking_id);
-        final Button submit = root.findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
+        final Button checkBooking = root.findViewById(R.id.check_booking);
+        checkBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String bookingId = editText.getText().toString();
@@ -54,7 +55,19 @@ public class HomeFragment extends Fragment {
                     homeViewModel.setText("Please enter valid booking id");
                     return;
                 }
-                getData("http://10.0.2.2:8080/flight?pnrNo=abcd");
+                getData(Consts.SERVER_ADDRESS_EMULATOR + "flight?pnrNo=" + bookingId);
+            }
+        });
+        final Button submit = root.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*String bookingId = editText.getText().toString();
+                if (bookingId.isEmpty()) {
+                    homeViewModel.setText("Please enter valid booking id");
+                    return;
+                }
+                getData(Consts.SERVER_ADDRESS_EMULATOR + "flight?pnrNo=" + bookingId);*/
             }
         });
         return root;

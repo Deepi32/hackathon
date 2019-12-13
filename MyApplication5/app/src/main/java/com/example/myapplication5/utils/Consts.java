@@ -7,5 +7,6 @@ public interface Consts {
     String VIEW_MODEL_CLASS = "view_model_class";
 
     String URL_ADDRESS = "url_address";
-    String SERVER_ADDRESS = "1.1.1.1";
+    String SERVER_ADDRESS = "http://192.168.0.104:8080/";
+    String SERVER_ADDRESS_EMULATOR = "http://10.0.2.2:8080/";
 }
