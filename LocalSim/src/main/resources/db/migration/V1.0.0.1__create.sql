@@ -12,7 +12,7 @@ INSERT INTO flight_information (id,destination_from,destination_to,end_time,book
 (1,'Delhi','Bali',NULL,'abcd',NULL,2,1,1)
 ;
 
-INSERT INTO "document" (id,document_name,country_id) VALUES
+INSERT INTO document (id,document_name,country_id) VALUES
 (1,'Passport',1)
 ,(2,'Aadhar card',1)
 ,(3,'Your Picture',1)
