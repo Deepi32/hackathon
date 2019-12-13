@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.SimDetails;
 import com.example.myapplication5.ui.home.HomeFragment;
+import com.example.myapplication5.utils.Consts;
 import com.example.myapplication5.utils.ItemListAdapter;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //getData("http://192.168.0.104:8080/sim/details?countryName=Indonesia");
-                getData("http://10.0.2.2:8080/sim/details?countryName=Indonesia");
+                getData(Consts.SERVER_ADDRESS_EMULATOR + "sim/details?countryName=Indonesia");
             }
         });
         return root;
