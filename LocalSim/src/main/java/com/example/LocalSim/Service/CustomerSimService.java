@@ -103,4 +103,14 @@ public class CustomerSimService {
     return BaseResponse.builder().status(HttpStatus.OK.value()).data(builder).build();
   }
 
+  public BaseResponse saveDocuments(Integer customerId, boolean isOnArrivalVisa) {
+
+    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer Not found"));
+    customerDetailsEntity.setIsDocumentUpload(true);
+    customerDetailsEntity.setIsOnArrivalVisa(isOnArrivalVisa);
+    customerDetailsRepository.save(customerDetailsEntity);
+
+    return BaseResponse.builder().status(HttpStatus.OK.value()).message("done").build();
+  }
+
 }

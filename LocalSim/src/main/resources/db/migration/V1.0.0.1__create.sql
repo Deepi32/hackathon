@@ -27,6 +27,6 @@ INSERT INTO sim_details (id, available_data_volume, data_speed, is_data_availabl
 ,(6,'20GB','3G',true,10,'Airtel','edfewfe',250,2)
 ;
 
-INSERT INTO customer_details (is_document_upload,payment_amount,payment_status,destination_to,flight_id,sim_id,user_id) VALUES
-(true,NULL,'PAID',1,1,3,NULL)
+INSERT INTO customer_details (id, is_document_upload,payment_amount,payment_status,destination_to,flight_id,sim_id,user_id, is_on_arrival_visa) VALUES
+(1,false,NULL,'PAID',1,1,3,NULL, false)
 ;
