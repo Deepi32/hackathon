@@ -16,7 +16,7 @@ create table country (
         sim_id int4,
         user_id int4,
         is_on_arrival_visa boolean,
-        verification_code int8,
+        verification_code varchar(255),
         primary key (id)
     );
 

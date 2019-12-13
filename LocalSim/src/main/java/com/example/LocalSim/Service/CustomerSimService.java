@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -136,6 +137,15 @@ public class CustomerSimService {
     customerDetailsRepository.save(customerDetailsEntity);
 
     return BaseResponse.builder().status(HttpStatus.OK.value()).message("done").build();
+  }
+
+  private void generateVerificationCode(Integer customerId) {
+
+    String uuid = UUID.randomUUID().toString().substring(0,6);
+    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer Not found"));
+    customerDetailsEntity.setVerificationCode(uuid);
+    customerDetailsRepository.save(customerDetailsEntity);
+
   }
 
 }
