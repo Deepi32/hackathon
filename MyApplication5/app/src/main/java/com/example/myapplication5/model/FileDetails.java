@@ -1,4 +1,4 @@
-package com.example.myapplication5.utils;
+package com.example.myapplication5.model;
 
 import android.net.Uri;
 

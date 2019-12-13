@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
             @Override
             public void onClick(View v) {
                 //getData("http://192.168.0.104:8080/sim/details?countryName=Indonesia");
-                getData(Consts.SERVER_ADDRESS_EMULATOR + "sim/details?countryName=Indonesia");
+                getData(Consts.URL_ADDRESS + "sim/details?countryName=Indonesia");
             }
         });
 

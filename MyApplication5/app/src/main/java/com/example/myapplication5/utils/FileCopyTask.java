@@ -6,20 +6,17 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.myapplication5.ui.dashboard.DashboardViewModel;
+import com.example.myapplication5.model.FileDetails;
 import com.example.myapplication5.ui.notifications.NotificationsViewModel;
-import com.pankaj.mediafilesaccess.ui.home.HomeViewModel;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileCopyTask extends AsyncTask<FileDetails, String, String> {
-    private static final String TAG = DownloaderTask.class.getSimpleName();
+    private static final String TAG = FileCopyTask.class.getSimpleName();
     private ProgressDialog progressDialog;
     private boolean isDownloaded;
     private NotificationsViewModel viewModel;
