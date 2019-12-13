@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseResponse<T> {
-    protected int status;
+    public int status;
 
-    protected String message;
-    protected T data;
+    public String message;
+    public T data;
 
     @Override
     public String toString() {
