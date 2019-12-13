@@ -19,8 +19,10 @@ import java.util.ArrayList;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder> {
     private ArrayList<SimDetails> simList;
+    private ListItemClickListener listItemClickListener;
 
-    public ItemListAdapter() {
+    public ItemListAdapter(ListItemClickListener listItemClickListener) {
+        this.listItemClickListener = listItemClickListener;
         simList = new ArrayList<>();
     }
 
@@ -52,6 +54,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
             public void onClick(View view) {
                 Toast.makeText(view.getContext(),"click on item: "
                         + simDetails.getNetworkProvider(),Toast.LENGTH_LONG).show();
+                listItemClickListener.onMyListItemClicked(simDetails);
             }
         });
     }
