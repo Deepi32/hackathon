@@ -7,19 +7,21 @@ import androidx.documentfile.provider.DocumentFile;
 public class VisaDetails extends JsonClass {
     private boolean isVisaOnArrival;
     private boolean isVisaIssued;
-    private DocumentsProvider visaDocument1;
-    private DocumentFile visaDocument2;
+    private FileDetails visaDocument;
 
     public VisaDetails() {
 
     }
 
-    public VisaDetails(boolean isVisaOnArrival, boolean isVisaIssued,
-                       DocumentsProvider visaDocument1, DocumentFile visaDocument2) {
+    public VisaDetails(boolean isVisaOnArrival, boolean isVisaIssued) {
         this.isVisaOnArrival = isVisaOnArrival;
         this.isVisaIssued = isVisaIssued;
-        this.visaDocument1 = visaDocument1;
-        this.visaDocument2 = visaDocument2;
+    }
+
+    public VisaDetails(boolean isVisaOnArrival, boolean isVisaIssued, FileDetails visaDocument) {
+        this.isVisaOnArrival = isVisaOnArrival;
+        this.isVisaIssued = isVisaIssued;
+        this.visaDocument = visaDocument;
     }
 
     public boolean isVisaOnArrival() {
@@ -28,6 +30,9 @@ public class VisaDetails extends JsonClass {
 
     public void setVisaOnArrival(boolean visaOnArrival) {
         isVisaOnArrival = visaOnArrival;
+        if (visaOnArrival) {
+            isVisaIssued = false;
+        }
     }
 
     public boolean isVisaIssued() {
@@ -36,21 +41,16 @@ public class VisaDetails extends JsonClass {
 
     public void setVisaIssued(boolean visaIssued) {
         isVisaIssued = visaIssued;
+        if (visaIssued) {
+            isVisaOnArrival = false;
+        }
     }
 
-    public DocumentsProvider getVisaDocument1() {
-        return visaDocument1;
+    public FileDetails getVisaDocument() {
+        return visaDocument;
     }
 
-    public void setVisaDocument1(DocumentsProvider visaDocument1) {
-        this.visaDocument1 = visaDocument1;
-    }
-
-    public DocumentFile getVisaDocument2() {
-        return visaDocument2;
-    }
-
-    public void setVisaDocument2(DocumentFile visaDocument2) {
-        this.visaDocument2 = visaDocument2;
+    public void setVisaDocument(FileDetails visaDocument) {
+        this.visaDocument = visaDocument;
     }
 }

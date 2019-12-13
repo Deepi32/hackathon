@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
                     homeViewModel.setText("Please enter valid booking id");
                     return;
                 }
-                getData(Consts.SERVER_ADDRESS_EMULATOR + "flight?pnrNo=" + bookingId);
+                getData(Consts.URL_ADDRESS + "flight?pnrNo=" + bookingId);
             }
         });
         final Button submit = root.findViewById(R.id.submit);
@@ -87,6 +87,13 @@ public class HomeFragment extends Fragment {
                         try {
                             //getting the whole json object from the response
                             JSONObject obj = new JSONObject(response);
+                            if (obj.getInt("status") != 200) {
+                                homeViewModel.setText("Error: " + obj.getString("message"));
+                                return;
+                            }
+
+                            JSONObject data = obj.getJSONObject("data");
+                            JSONObject user = obj.getJSONObject("user");
 
                             //we have the array named hero inside the object
                             //so here we are getting that json array
