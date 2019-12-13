@@ -94,12 +94,12 @@ public class CustomerSimService {
     List<DocumentEntity> documentEntities = documentRepository.findAllByCountry(customerDetailsEntity.getDestinationTo());
 
 //    List<DocumentR> documentRList=documentEntities.stream().map(documentEntity -> DocumentR.builder().name(documentEntity.getDocumentName()).build()).collect(Collectors.toList());
-    DocumentResponse.DocumentResponseBuilder builder = DocumentResponse.builder().documentRList(documentEntities.stream().map
+    DocumentResponse builder = DocumentResponse.builder().documentRList(documentEntities.stream().map
             (documentEntity -> {
               DocumentR documentR=DocumentR.builder().id(documentEntity.getId()).
                       information(documentEntity.getDocumentInfo()).name(documentEntity.getDocumentName()).build();
               return documentR;
-            }).collect(Collectors.toList()));
+            }).collect(Collectors.toList())).build();
     return BaseResponse.builder().status(HttpStatus.OK.value()).data(builder).build();
   }
 
