@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Application5</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="booking_id">Booking id</string>
+    <string name="submit">Submit</string>
+    <string name="check">Check</string>
+    <string name="available_sim_cards">Available Sim cards: </string>
+    <string name="provide_documents">Please provide documents</string>
+    <string name="visa_documents">Visa documents</string>
+    <string name="visa_on_arrival">Visa on arrival</string>
+    <string name="upload_visa">Upload visa</string>
+    <string name="visa_issued">Visa issued</string>
+    <string name="upload_identity_proof">Upload identity proof</string>
+    <string name="upload_your_photo">Upload your photo</string>
+</resources>
