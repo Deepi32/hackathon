@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "customer_sim_details")
-public class CustomerSimDetailsEntity extends AbstractEntity {
+@Table(name = "customer_details")
+public class CustomerDetailsEntity extends AbstractEntity {
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "flight_id")
@@ -30,6 +30,13 @@ public class CustomerSimDetailsEntity extends AbstractEntity {
   @Column(name = "payment_status")
   private PaymentStatus paymentStatus;
 
+  @Column(name="payment_amount")
+  private String paymentAmount;
+
   @Column(name = "is_document_upload")
   private Boolean isDocumentUpload;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="user_id")
+  private UserEntity userEntity;
 }

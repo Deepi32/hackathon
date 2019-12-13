@@ -30,13 +30,11 @@ public class FlightInformationEntity extends AbstractEntity {
   @Column(name = "destination_to")
   private String destinationTo;
 
-
   @ManyToOne(fetch = FetchType.LAZY)
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
   @JoinColumn(name = "country_from")
   private CountryEntity countryFrom;
-
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "country_to")
@@ -48,8 +46,8 @@ public class FlightInformationEntity extends AbstractEntity {
   @Column(name="end_time")
   private LocalDateTime endTime;
 
-  @Column(name = "pnr_no")
-  private String pnrNo;
+  @Column(name = "booking_id")
+  private String bookingId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")

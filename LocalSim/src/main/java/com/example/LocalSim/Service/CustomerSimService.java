@@ -1,11 +1,11 @@
 package com.example.LocalSim.Service;
 
 import com.example.LocalSim.Model.CountryEntity;
-import com.example.LocalSim.Model.CustomerSimDetailsEntity;
+import com.example.LocalSim.Model.CustomerDetailsEntity;
 import com.example.LocalSim.Model.FlightInformationEntity;
 import com.example.LocalSim.Model.SimDetailsEntity;
 import com.example.LocalSim.Repository.CountryRepository;
-import com.example.LocalSim.Repository.CustomerSimRepository;
+import com.example.LocalSim.Repository.CustomerDetailsRepository;
 import com.example.LocalSim.Repository.FlightInformationRepository;
 import com.example.LocalSim.Repository.SimDetailsRepository;
 import com.example.LocalSim.Response.BaseResponse;
@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,12 +37,12 @@ public class CustomerSimService {
   SimDetailsRepository simDetailsRepository;
 
   @Autowired
-  CustomerSimRepository customerSimRepository;
+  CustomerDetailsRepository customerDetailsRepository;
 
 
-  public BaseResponse getFlightInformation(String pnrNo) {
+  public BaseResponse getFlightInformation(String bookingId) {
     Optional<FlightInformationEntity> flightInformationEntityOptional =
-        flightInformationRepository.findByPnrNo(pnrNo);
+        flightInformationRepository.findByBookingId(bookingId);
     FlightInformationEntity fl=flightInformationEntityOptional.get();
     if (flightInformationEntityOptional.isPresent())
       return BaseResponse.builder()
@@ -55,7 +53,8 @@ public class CustomerSimService {
   }
 
   public BaseResponse getSimInformationFromCountry(String countryFrom) {
-    CountryEntity countryEntity=countryRepository.findByCountryName(countryFrom).orElseThrow(()->new EntityNotFoundException("No sim facility available in this country "));
+    CountryEntity countryEntity=countryRepository.findByCountryName(countryFrom)
+            .orElseThrow(()->new EntityNotFoundException("No sim facility available in this country "));
     List<SimDetailsEntity> simDetailsEntities=simDetailsRepository.findAllByCountry(countryEntity);
 
       return BaseResponse.builder()
@@ -66,7 +65,7 @@ public class CustomerSimService {
   }
   public BaseResponse uploadDocumentsInFolder(List<MultipartFile> multipartFiles, HttpServletRequest servletRequest, Integer customerId) throws IOException {
        String UPLOADED_FOLDER = "/home/deepanshu/Images";
-    CustomerSimDetailsEntity customerSimDetailsEntity = customerSimRepository.findById(customerId).
+    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).
             orElseThrow(() -> new EntityNotFoundException(String.format("Customer not found for id {}", customerId)));
 
     if (null != multipartFiles && multipartFiles.size() > 0) {

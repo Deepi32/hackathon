@@ -1,6 +1,6 @@
 package com.example.LocalSim.Model;
 
-import com.example.LocalSim.Enum.CompanyNames;
+import com.example.LocalSim.Enum.Operators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,8 +26,8 @@ import javax.persistence.Table;
 public class SimDetailsEntity extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "company_name")
-    private CompanyNames companyName;
+    @Column(name = "operators")
+    private Operators operators;
 
     @Column(name = "number_of_days")
     private Integer numberOfDays;
@@ -38,8 +38,14 @@ public class SimDetailsEntity extends AbstractEntity {
     @Column(name = "package_details")
     private String packageDetails;
 
+    @Column(name="data_speed")
+    private String dataSpeed;
+
     @Column(name="is_data_available")
     private Boolean isDataAvailable;
+
+    @Column(name="available_data_volume")
+    private String availableDataVolume;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")

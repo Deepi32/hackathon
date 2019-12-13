@@ -1,13 +1,13 @@
 package com.example.LocalSim.Enum;
 
-public enum CompanyNames {
-    Airtel("Airtle"),
+public enum Operators {
+    Airtel("Airtel"),
     Vodafone("Vodafone"),
     Jio("Jio"),
     BSNL("Bsnl");
     String label;
 
-    CompanyNames(String label) {
+    Operators(String label) {
         this.label = label;
     }
 }
