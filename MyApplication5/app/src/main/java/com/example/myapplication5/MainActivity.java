@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.navigation_summary:
                 //navController.navigate(R.id.navigation_summary);
+                this.finish();
                 break;
         }
     }
