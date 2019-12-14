@@ -69,8 +69,8 @@ public class PaymentFragment extends Fragment {
             public void onClick(View v) {
                 // pay
                 BookingDetails booking = paymentViewModel.getBookingDetails().getValue();
-                if (booking != null && booking.getUserDetails() != null) {
-                    int userId = booking.getUserDetails().getId();
+                if (booking != null) {
+                    String userId = booking.getUserId();
                     getData(Consts.URL_ADDRESS + Consts.URL_PAYMENT + userId);
                 }
             }

@@ -64,8 +64,9 @@ public class HomeFragment extends Fragment {
         homeViewModel.getBookingDetails().observe(this, new Observer<BookingDetails>() {
             @Override
             public void onChanged(@Nullable BookingDetails booking) {
-                if (booking != null)
+                if (booking != null) {
                     homeViewModel.setText(booking.toString());
+                }
             }
         });
 
@@ -115,6 +116,8 @@ public class HomeFragment extends Fragment {
                             BookingDetails booking = new BookingDetails();
                             booking.initFrom(data);
                             homeViewModel.setBookingDetails(booking);
+                            Log.d("HomeFragment", "getData, booking: "
+                                    + booking.toString());
 
                             //we have the array named hero inside the object
                             //so here we are getting that json array

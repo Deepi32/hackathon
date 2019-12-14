@@ -15,13 +15,15 @@ public class BookingDetails extends JsonClass {
     private String startTime;
     private String endTime;
     private String destinationCountry;
+    private String departureCountry;
+    private String userId;
     private UserDetails userDetails;
 
     public BookingDetails() {}
 
     public BookingDetails(int id, String bookingId, String passengerName, String bookingFrom,
                           String bookingTo, String startTime, String endTime,
-                          String destinationCountry, UserDetails userDetails) {
+                          String destinationCountry, String departureCountry, UserDetails userDetails) {
         this.id = id;
         this.bookingId = bookingId;
         this.passengerName = passengerName;
@@ -30,6 +32,7 @@ public class BookingDetails extends JsonClass {
         this.startTime = startTime;
         this.endTime = endTime;
         this.destinationCountry = destinationCountry;
+        this.departureCountry = departureCountry;
         this.userDetails = userDetails;
     }
 
@@ -97,6 +100,22 @@ public class BookingDetails extends JsonClass {
         this.destinationCountry = destinationCountry;
     }
 
+    public String getDepartureCountry() {
+        return departureCountry;
+    }
+
+    public void setDepartureCountry(String departureCountry) {
+        this.departureCountry = departureCountry;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public UserDetails getUserDetails() {
         return userDetails;
     }
@@ -107,15 +126,18 @@ public class BookingDetails extends JsonClass {
 
     public void initFrom(JSONObject object) throws JSONException {
         if (object == null) return;
-        setId(object.getInt("id"));
+        //setId(object.getInt("id"));
         setBookingId(object.getString("bookingId"));
         setBookingFrom(object.getString("destinationFrom"));
         setBookingTo(object.getString("destinationTo"));
         setStartTime(object.getString("startTime"));
         setEndTime(object.getString("endTime"));
-        UserDetails userDetails = new UserDetails();
+        setDestinationCountry(object.getString("countryTo"));
+        setDepartureCountry(object.getString("countryFrom"));
+        setUserId(object.getString("userId"));
+        /*UserDetails userDetails = new UserDetails();
         userDetails.initFrom(object.getJSONObject("user"));
-        setUserDetails(userDetails);
+        setUserDetails(userDetails);*/
     }
 
     @NonNull

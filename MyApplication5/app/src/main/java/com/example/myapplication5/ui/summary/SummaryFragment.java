@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication5.MainActivity;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.BookingDetails;
+import com.example.myapplication5.model.SimDetails;
 import com.example.myapplication5.ui.home.HomeViewModel;
 import com.example.myapplication5.utils.Consts;
 
@@ -34,41 +36,21 @@ import org.json.JSONObject;
 
 public class SummaryFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private SummaryViewModel summaryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        summaryViewModel =
+                ViewModelProviders.of(this).get(SummaryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.error);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        final WebView summaryContent = root.findViewById(R.id.summary_content);
+        summaryViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                //summaryContent.set;
             }
         });
 
-        final EditText editText = root.findViewById(R.id.booking_id);
-        final Button checkBooking = root.findViewById(R.id.check_booking);
-        checkBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String bookingId = editText.getText().toString();
-                if (bookingId.isEmpty()) {
-                    homeViewModel.setText("Please enter valid booking id");
-                    return;
-                }
-                getData(Consts.URL_ADDRESS + Consts.URL_BOOKING_ID + bookingId);
-            }
-        });
-        homeViewModel.getBookingDetails().observe(this, new Observer<BookingDetails>() {
-            @Override
-            public void onChanged(@Nullable BookingDetails booking) {
-                if (booking != null)
-                    homeViewModel.setText(booking.toString());
-            }
-        });
 
         final Button submit = root.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -77,17 +59,20 @@ public class SummaryFragment extends Fragment {
                 Log.d("HomeFrag", "OnClick, submit");
                 Activity activity = getActivity();
                 if (activity != null && activity instanceof MainActivity) {
-                    ((MainActivity) activity).switchToNextTab(1);
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_summary);
                 }
-
-                /*String bookingId = editText.getText().toString();
-                if (bookingId.isEmpty()) {
-                    homeViewModel.setText("Please enter valid booking id");
-                    return;
-                }
-                getData(Consts.SERVER_ADDRESS_EMULATOR + "flight?pnrNo=" + bookingId);*/
             }
         });
+
+        String userId = "";
+        Activity activity = getActivity();
+        if (activity != null && activity instanceof MainActivity) {
+            BookingDetails bookingDetails = ((MainActivity) activity).getBookingDetails();
+            if (bookingDetails != null) {
+                userId = bookingDetails.getUserId();
+            }
+        }
+        getData(Consts.URL_ADDRESS + Consts.URL_SUMMARY + userId);
         return root;
     }
 
@@ -97,7 +82,7 @@ public class SummaryFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Log.d("HomeFragment", "getData, onResponse : " + response);
-                        homeViewModel.setText("response: " + response);
+                        //homeViewModel.setText("response: " + response);
                         //hiding the progressbar after completion
                         //progressBar.setVisibility(View.INVISIBLE);
 
@@ -105,7 +90,7 @@ public class SummaryFragment extends Fragment {
                         try {
                             //getting the whole json object from the response
                             JSONObject obj = new JSONObject(response);
-                            if (obj.getInt("status") != 200) {
+                            /*if (obj.getInt("status") != 200) {
                                 homeViewModel.setText("Error: " + obj.getString("message"));
                                 return;
                             }
@@ -113,7 +98,7 @@ public class SummaryFragment extends Fragment {
                             JSONObject data = obj.getJSONObject("data");
                             BookingDetails booking = new BookingDetails();
                             booking.initFrom(data);
-                            homeViewModel.setBookingDetails(booking);
+                            homeViewModel.setBookingDetails(booking);*/
 
                             //we have the array named hero inside the object
                             //so here we are getting that json array
