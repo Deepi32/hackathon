@@ -125,8 +125,9 @@ public class CustomerSimService {
         return BaseResponse.builder().status(HttpStatus.OK.value()).data(builder).build();
     }
 
-    public BaseResponse paymentPaid(Integer customerId, Boolean paymentPaid) {
+    public BaseResponse paymentPaid(Integer customerId) {
 
+        Boolean paymentPaid=true;
         CustomerDetailsEntity customerDetailsEntity = getCustomerDetails(customerId);
         if (paymentPaid == true) {
             customerDetailsEntity.setPaymentStatus(PaymentStatus.PAID);
