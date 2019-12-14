@@ -51,7 +51,7 @@ public class CustomerSimController {
 
     return ResponseEntity.ok(customerSimService.showDocuments(simId,bookingId));
   }
-  @PostMapping("payment")
+  @GetMapping("payment")
   public ResponseEntity<?> paymentPaid(@NotNull @RequestParam("customerId") Integer customerId)
   {
     return ResponseEntity.ok(customerSimService.paymentPaid(customerId));
