@@ -52,10 +52,9 @@ public class CustomerSimController {
     return ResponseEntity.ok(customerSimService.showDocuments(simId,bookingId));
   }
   @PostMapping("payment")
-  public ResponseEntity<?> paymentPaid(@NotNull @RequestParam("customerId") Integer customerId,
-                                       @RequestParam("isPaid")Boolean isPaid)
+  public ResponseEntity<?> paymentPaid(@NotNull @RequestParam("customerId") Integer customerId)
   {
-    return ResponseEntity.ok(customerSimService.paymentPaid(customerId,isPaid));
+    return ResponseEntity.ok(customerSimService.paymentPaid(customerId));
 
   }
 
@@ -64,6 +63,11 @@ public class CustomerSimController {
 
     return ResponseEntity.ok(customerSimService.saveDocuments(customerId, isOnArrivalVisa));
 
+  }
+
+  @GetMapping(value = "result")
+  public ResponseEntity<?> renderResult(@NotNull @RequestParam("customerId") Integer customerId) {
+    return ResponseEntity.ok(customerSimService.renderResult(customerId));
   }
 
 }
