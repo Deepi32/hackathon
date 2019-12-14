@@ -9,10 +9,12 @@ import com.example.myapplication5.model.BookingDetails;
 public class SummaryViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
+    private MutableLiveData<String> response;
     private MutableLiveData<BookingDetails> bookingDetails;
 
     public SummaryViewModel() {
         mText = new MutableLiveData<>();
+        response = new MutableLiveData<>();
         bookingDetails = new MutableLiveData<>();
         //mText.setValue("This is home fragment");
     }
@@ -23,6 +25,14 @@ public class SummaryViewModel extends ViewModel {
 
     public void setText(String text) {
         this.mText.setValue(text);
+    }
+
+    public MutableLiveData<String> getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response.setValue(response);
     }
 
     public MutableLiveData<BookingDetails> getBookingDetails() {

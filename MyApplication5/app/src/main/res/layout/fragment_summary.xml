@@ -11,6 +11,7 @@
         android:layout_margin="@dimen/item_margin"
         android:textSize="@dimen/text_size_normal"
         android:text="@string/summary"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
