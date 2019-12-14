@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
             @Override
             public void onClick(View v) {
                 //getData("http://192.168.0.104:8080/sim/details?countryName=Indonesia");
-                getData(Consts.SERVER_ADDRESS_EMULATOR + "sim/details?countryName=Indonesia");
+                getData(Consts.URL_ADDRESS + "sim/details?countryName=Indonesia");
             }
         });
 
@@ -87,6 +87,8 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
                 }
             }
         });
+        Log.d("DashBrdFrag", "OnCreateView");
+        getData(Consts.URL_ADDRESS + "sim/details?countryName=Indonesia");
         return root;
     }
 
@@ -111,12 +113,7 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
                             for (int i = 0 ; i < simArray.length(); i++) {
                                 JSONObject sim = simArray.getJSONObject(i);
                                 SimDetails simDetails = new SimDetails();
-                                simDetails.setId(sim.getInt("id"));
-                                simDetails.setNetworkProvider(sim.getString("companyName"));
-                                simDetails.setValidity(sim.getString("numberOfDays"));
-                                simDetails.setPrice(sim.getString("price"));
-                                simDetails.setDataBand(sim.getBoolean("isDataAvailable") ?
-                                        "4G" : "2G");
+                                simDetails.initFrom(sim);
                                 simList.add(simDetails);
                             }
                             if (!simList.isEmpty()) {

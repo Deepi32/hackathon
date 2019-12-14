@@ -7,6 +7,8 @@ import com.example.LocalSim.Response.BaseResponse;
 
 import com.example.LocalSim.Response.DocumentR;
 import com.example.LocalSim.Response.DocumentResponse;
+import com.example.LocalSim.Response.FlightResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -43,15 +45,26 @@ public class CustomerSimService {
 
 
     public BaseResponse getFlightInformation(String bookingId) {
+
         Optional<FlightInformationEntity> flightInformationEntityOptional =
                 flightInformationRepository.findByBookingId(bookingId);
+        if(!flightInformationEntityOptional.isPresent())
+        {
+            return BaseResponse.builder().status(400).message("Wrong request").build();
+        }
         FlightInformationEntity fl = flightInformationEntityOptional.get();
+        FlightResponse flightResponse = FlightResponse.builder().bookingId(fl.getBookingId()).countryFrom(fl.getCountryFrom().getCountryName())
+                .countryTo(fl.getCountryTo().getCountryName()).destinationFrom(fl.getDestinationFrom()).
+                        destinationTo(fl.getDestinationTo()).startTime(fl.getStartTime()).
+                        endTime(fl.getEndTime()).userId(fl.getUser().getId()).build();
+
+
         if (flightInformationEntityOptional.isPresent())
             return BaseResponse.builder()
                     .status(HttpStatus.OK.value())
-                    .data(fl)
+                    .data(flightResponse)
                     .build();
-        else return BaseResponse.builder().status(HttpStatus.BAD_REQUEST.value()).build();
+        else return BaseResponse.builder().status(400).message("Wrong request").build();
     }
 
     public BaseResponse getSimInformationFromCountry(String countryFrom) {
@@ -120,6 +133,7 @@ public class CustomerSimService {
         } else {
             customerDetailsEntity.setPaymentStatus(PaymentStatus.NOT_PAID);
         }
+        customerDetailsEntity.setVerificationCode(generateVerificationCode(customerId));
         customerDetailsRepository.save(customerDetailsEntity);
         return BaseResponse.builder().status(HttpStatus.OK.value()).build();
     }
@@ -139,12 +153,9 @@ public class CustomerSimService {
     return BaseResponse.builder().status(HttpStatus.OK.value()).message("done").build();
   }
 
-  private void generateVerificationCode(Integer customerId) {
+  private String generateVerificationCode(Integer customerId) {
 
-    String uuid = UUID.randomUUID().toString().substring(0,6);
-    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer Not found"));
-    customerDetailsEntity.setVerificationCode(uuid);
-    customerDetailsRepository.save(customerDetailsEntity);
+    return UUID.randomUUID().toString().substring(0,6);
 
   }
 
