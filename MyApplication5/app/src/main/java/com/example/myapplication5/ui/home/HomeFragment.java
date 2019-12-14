@@ -64,8 +64,9 @@ public class HomeFragment extends Fragment {
         homeViewModel.getBookingDetails().observe(this, new Observer<BookingDetails>() {
             @Override
             public void onChanged(@Nullable BookingDetails booking) {
-                if (booking != null)
+                if (booking != null) {
                     homeViewModel.setText(booking.toString());
+                }
             }
         });
 
@@ -76,7 +77,9 @@ public class HomeFragment extends Fragment {
                 Log.d("HomeFrag", "OnClick, submit");
                 Activity activity = getActivity();
                 if (activity != null && activity instanceof MainActivity) {
-                    ((MainActivity) activity).switchToNextTab(1);
+                    ((MainActivity) activity).saveBookingData(
+                            homeViewModel.getBookingDetails().getValue());
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_home);
                 }
 
                 /*String bookingId = editText.getText().toString();
@@ -113,6 +116,8 @@ public class HomeFragment extends Fragment {
                             BookingDetails booking = new BookingDetails();
                             booking.initFrom(data);
                             homeViewModel.setBookingDetails(booking);
+                            Log.d("HomeFragment", "getData, booking: "
+                                    + booking.toString());
 
                             //we have the array named hero inside the object
                             //so here we are getting that json array

@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication5.MainActivity;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.BookingDetails;
+import com.example.myapplication5.model.SimDetails;
 import com.example.myapplication5.ui.home.HomeViewModel;
 import com.example.myapplication5.utils.Consts;
 
@@ -34,58 +35,85 @@ import org.json.JSONObject;
 
 public class PaymentFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private PaymentViewModel paymentViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.error);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        paymentViewModel =
+                ViewModelProviders.of(this).get(PaymentViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_payment, container, false);
+
+        final TextView payResult = root.findViewById(R.id.pay_result);
+        paymentViewModel.getPayResult().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                payResult.setText(s);
             }
         });
 
-        final EditText editText = root.findViewById(R.id.booking_id);
-        final Button checkBooking = root.findViewById(R.id.check_booking);
-        checkBooking.setOnClickListener(new View.OnClickListener() {
+        Activity activity = getActivity();
+        if (activity != null && activity instanceof MainActivity) {
+            SimDetails simDetails = ((MainActivity) activity).getSimDetails();
+            if (simDetails != null) {
+                paymentViewModel.setSimDetails(simDetails);
+            }
+            BookingDetails bookingDetails = ((MainActivity) activity).getBookingDetails();
+            if (bookingDetails != null) {
+                paymentViewModel.setBookingDetails(bookingDetails);
+            }
+        }
+
+        final Button pay = root.findViewById(R.id.pay_button);
+        pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bookingId = editText.getText().toString();
-                if (bookingId.isEmpty()) {
-                    homeViewModel.setText("Please enter valid booking id");
-                    return;
+                // pay
+                BookingDetails booking = paymentViewModel.getBookingDetails().getValue();
+                if (booking != null) {
+                    String userId = booking.getUserId();
+                    getData(Consts.URL_ADDRESS + Consts.URL_PAYMENT + userId);
                 }
-                getData(Consts.URL_ADDRESS + Consts.URL_BOOKING_ID + bookingId);
-            }
-        });
-        homeViewModel.getBookingDetails().observe(this, new Observer<BookingDetails>() {
-            @Override
-            public void onChanged(@Nullable BookingDetails booking) {
-                if (booking != null)
-                    homeViewModel.setText(booking.toString());
             }
         });
 
+        final TextView payHeader = root.findViewById(R.id.pay_header);
         final Button submit = root.findViewById(R.id.submit);
+
+        paymentViewModel.getSimDetails().observe(this, new Observer<SimDetails>() {
+            @Override
+            public void onChanged(@Nullable SimDetails simDetails) {
+                if (simDetails != null) {
+                    String payHeaderString = getText(R.string.pay_amount) + simDetails.getPrice();
+                    payHeader.setText(payHeaderString);
+                    pay.setVisibility(View.VISIBLE);
+                } else {
+                    pay.setVisibility(View.INVISIBLE);
+                }
+                submit.setEnabled(false);
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("HomeFrag", "OnClick, submit");
                 Activity activity = getActivity();
                 if (activity != null && activity instanceof MainActivity) {
-                    ((MainActivity) activity).switchToNextTab(1);
+                    ((MainActivity) activity).savePaymentDetails(
+                            paymentViewModel.getIsPaymentDone().getValue(),
+                            paymentViewModel.getPayResult().getValue());
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_payment);
                 }
+            }
+        });
 
-                /*String bookingId = editText.getText().toString();
-                if (bookingId.isEmpty()) {
-                    homeViewModel.setText("Please enter valid booking id");
-                    return;
+        paymentViewModel.getIsPaymentDone().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean isPaymentDone) {
+                if (isPaymentDone) {
+                    pay.setEnabled(false);
+                    submit.setEnabled(true);
                 }
-                getData(Consts.SERVER_ADDRESS_EMULATOR + "flight?pnrNo=" + bookingId);*/
             }
         });
         return root;
@@ -97,7 +125,7 @@ public class PaymentFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Log.d("HomeFragment", "getData, onResponse : " + response);
-                        homeViewModel.setText("response: " + response);
+                        //homeViewModel.setText("response: " + response);
                         //hiding the progressbar after completion
                         //progressBar.setVisibility(View.INVISIBLE);
 
@@ -105,15 +133,16 @@ public class PaymentFragment extends Fragment {
                         try {
                             //getting the whole json object from the response
                             JSONObject obj = new JSONObject(response);
-                            if (obj.getInt("status") != 200) {
-                                homeViewModel.setText("Error: " + obj.getString("message"));
-                                return;
+                            if (obj.getInt("status") == 200) {
+                                paymentViewModel.setPayResult(obj.getString("message"));
+                                paymentViewModel.setIsPaymentDone(true);
                             }
 
-                            JSONObject data = obj.getJSONObject("data");
+                            /*JSONObject data = obj.getJSONObject("data");
                             BookingDetails booking = new BookingDetails();
                             booking.initFrom(data);
                             homeViewModel.setBookingDetails(booking);
+                            */
 
                             //we have the array named hero inside the object
                             //so here we are getting that json array

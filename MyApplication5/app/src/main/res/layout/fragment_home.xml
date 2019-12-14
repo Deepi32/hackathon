@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/item_margin"
         android:textSize="@dimen/text_size_normal"
-        android:text="@string/submit"
+        android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/booking_details"

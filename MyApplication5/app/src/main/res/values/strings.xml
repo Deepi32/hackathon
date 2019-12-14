@@ -16,4 +16,12 @@
     <string name="upload_your_photo">Upload your photo</string>
 
     <string name="booking_details">Booking details</string>
+    <string name="sim_data_plans">SIM data plans</string>
+    <string name="upload_documents">Upload documents</string>
+    <string name="payment">Payment</string>
+    <string name="summary">Summary</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="pay_amount">Pay Rs. </string>
+    <string name="make_payment">Make payment</string>
 </resources>

@@ -5,30 +5,26 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/available_sim_cards"
+        android:id="@+id/summary_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_margin"
+        android:layout_margin="@dimen/item_margin"
         android:textSize="@dimen/text_size_normal"
-        android:text="@string/available_sim_cards"
+        android:text="@string/summary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:drawableEnd="@drawable/ic_refresh"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sim_list"
+    <WebView
+        android:id="@+id/summary_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHorizontal_weight="1"
+        android:layout_margin="@dimen/item_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/available_sim_cards"
-        app:layout_constraintBottom_toTopOf="@id/submit"
-        >
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/summary_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <Button
         android:id="@+id/submit"
@@ -36,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/item_margin"
         android:textSize="@dimen/text_size_normal"
-        android:text="@string/next"
+        android:text="@string/done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
