@@ -42,12 +42,27 @@ public class SummaryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         summaryViewModel =
                 ViewModelProviders.of(this).get(SummaryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final WebView summaryContent = root.findViewById(R.id.summary_content);
+        View root = inflater.inflate(R.layout.fragment_summary, container, false);
+
+        final TextView summary = root.findViewById(R.id.summary_label);
         summaryViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                summary.setText(s);
+                summary.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final WebView summaryContent = root.findViewById(R.id.summary_content);
+        summaryViewModel.getResponse().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
                 //summaryContent.set;
+                String mimeType = "text/html";
+                String encoding = "utf-8";
+                Log.d("HomeFrag", "onChanged, response: " + s);
+                summaryContent.loadData(s, mimeType, encoding);
+                summary.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -69,6 +84,7 @@ public class SummaryFragment extends Fragment {
         if (activity != null && activity instanceof MainActivity) {
             BookingDetails bookingDetails = ((MainActivity) activity).getBookingDetails();
             if (bookingDetails != null) {
+                summaryViewModel.setBookingDetails(bookingDetails);
                 userId = bookingDetails.getUserId();
             }
         }
@@ -90,12 +106,14 @@ public class SummaryFragment extends Fragment {
                         try {
                             //getting the whole json object from the response
                             JSONObject obj = new JSONObject(response);
-                            /*if (obj.getInt("status") != 200) {
-                                homeViewModel.setText("Error: " + obj.getString("message"));
+                            if (obj.getInt("status") != 200) {
+                                summaryViewModel.setText("Error: " + obj.getString("message"));
                                 return;
+                            } else {
+                                summaryViewModel.setResponse(obj.getString("data"));
                             }
 
-                            JSONObject data = obj.getJSONObject("data");
+                            /*JSONObject data = obj.getJSONObject("data");
                             BookingDetails booking = new BookingDetails();
                             booking.initFrom(data);
                             homeViewModel.setBookingDetails(booking);*/
