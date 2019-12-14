@@ -156,7 +156,6 @@ public class CustomerSimService {
   private String generateVerificationCode(Integer customerId) {
 
     return UUID.randomUUID().toString().substring(0,6);
-
   }
 
   public BaseResponse renderResult(Integer customerId) {
