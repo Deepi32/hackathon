@@ -148,4 +148,39 @@ public class CustomerSimService {
 
   }
 
+  public BaseResponse renderResult(Integer customerId) {
+
+    CustomerDetailsEntity customerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer Not found"));
+    String verificationCode = customerDetailsEntity.getVerificationCode();
+
+    String result = "<!DOCTYPE html>\n" +
+            "<html lang=\"en\">\n" +
+            "<head>\n" +
+            "\n" +
+            "</head>\n" +
+            "<body>\n" +
+            "                <h4> <strong>Your application process has been completed.</strong></h4> <br><br>\n" +
+            "                \n" +
+            "               \n" +
+            "                <ul>\n" +
+            "                    <li >Please carry the hard copy of all the uploaded documents for physical verification.</li>\n" +
+            "                    <li >Show the verification code "+verificationCode+" on the booth at the time of SIM collection.</li>\n" +
+            "                    <li >Complete your physical verification and collect the SIM.</li>\n" +
+            "                    \n" +
+            "                </ul>\n" +
+            "                \n" +
+            "            </div> \n" +
+            "\n" +
+            "            \n" +
+            "           \n" +
+            "</body>\n" +
+            "</html>\n";
+
+
+    return BaseResponse.builder()
+            .status(HttpStatus.OK.value())
+            .data(result)
+            .build();
+  }
+
 }
