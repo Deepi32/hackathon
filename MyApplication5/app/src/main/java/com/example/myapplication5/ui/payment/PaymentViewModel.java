@@ -5,24 +5,45 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication5.model.BookingDetails;
+import com.example.myapplication5.model.SimDetails;
 
 public class PaymentViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> payResult;
+    private MutableLiveData<SimDetails> simDetails;
+    private MutableLiveData<Boolean> isPaymentDone;
     private MutableLiveData<BookingDetails> bookingDetails;
 
     public PaymentViewModel() {
-        mText = new MutableLiveData<>();
+        payResult = new MutableLiveData<>();
+        simDetails = new MutableLiveData<>();
+        isPaymentDone = new MutableLiveData<>();
         bookingDetails = new MutableLiveData<>();
         //mText.setValue("This is home fragment");
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<String> getPayResult() {
+        return payResult;
     }
 
-    public void setText(String text) {
-        this.mText.setValue(text);
+    public void setPayResult(String payResult) {
+        this.payResult.setValue(payResult);
+    }
+
+    public MutableLiveData<SimDetails> getSimDetails() {
+        return simDetails;
+    }
+
+    public void setSimDetails(SimDetails simDetails) {
+        this.simDetails.setValue(simDetails);
+    }
+
+    public MutableLiveData<Boolean> getIsPaymentDone() {
+        return isPaymentDone;
+    }
+
+    public void setIsPaymentDone(boolean isPaymentDone) {
+        this.isPaymentDone.setValue(isPaymentDone);
     }
 
     public MutableLiveData<BookingDetails> getBookingDetails() {

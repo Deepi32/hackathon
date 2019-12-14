@@ -76,7 +76,9 @@ public class HomeFragment extends Fragment {
                 Log.d("HomeFrag", "OnClick, submit");
                 Activity activity = getActivity();
                 if (activity != null && activity instanceof MainActivity) {
-                    ((MainActivity) activity).switchToNextTab(1);
+                    ((MainActivity) activity).saveBookingData(
+                            homeViewModel.getBookingDetails().getValue());
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_home);
                 }
 
                 /*String bookingId = editText.getText().toString();

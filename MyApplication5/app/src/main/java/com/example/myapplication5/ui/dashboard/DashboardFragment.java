@@ -1,5 +1,6 @@
 package com.example.myapplication5.ui.dashboard;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication5.MainActivity;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.SimDetails;
 import com.example.myapplication5.ui.home.HomeFragment;
@@ -60,11 +62,17 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
                 }
             }
         });
-        final Button check = root.findViewById(R.id.submit);
-        check.setOnClickListener(new View.OnClickListener() {
+        final Button submit = root.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: switch to next screen
+                Activity activity = getActivity();
+                if (activity != null && activity instanceof MainActivity) {
+                    ((MainActivity) activity).saveSimData(
+                            dashboardViewModel.getSelectedSim().getValue());
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_dashboard);
+                }
             }
         });
 
@@ -81,9 +89,9 @@ public class DashboardFragment extends Fragment implements ListItemClickListener
             @Override
             public void onChanged(SimDetails simDetails) {
                 if (simDetails != null && !simDetails.isEmpty()) {
-                    check.setEnabled(true);
+                    submit.setEnabled(true);
                 } else {
-                    check.setEnabled(false);
+                    submit.setEnabled(false);
                 }
             }
         });

@@ -10,6 +10,7 @@ public interface Consts {
     String SERVER_ADDRESS = "http://192.168.0.104:8080/";
     String SERVER_ADDRESS_EMULATOR = "http://10.0.2.2:8080/";
     String URL_BOOKING_ID = "flight?bookingId=";
+    String URL_PAYMENT = "payment?customerId=";
 
     int ACTIVITY_RESULT_CREATE_FILE = 1;
     int ACTIVITY_RESULT_PICK_FOLDER = 2;

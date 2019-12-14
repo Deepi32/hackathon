@@ -14,12 +14,24 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.myapplication5.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/available_sim_cards"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.myapplication5.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/upload_documents"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_payment"
+        android:name="com.example.myapplication5.ui.payment.PaymentFragment"
+        android:label="@string/payment"
+        tools:layout="@layout/fragment_payment" />
+
+    <fragment
+        android:id="@+id/navigation_summary"
+        android:name="com.example.myapplication5.ui.summary.SummaryFragment"
+        android:label="@string/summary"
+        tools:layout="@layout/fragment_summary" />
 </navigation>

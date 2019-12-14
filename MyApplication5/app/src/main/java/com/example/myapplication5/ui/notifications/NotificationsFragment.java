@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.myapplication5.MainActivity;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.FileDetails;
 import com.example.myapplication5.model.VisaDetails;
@@ -123,6 +125,22 @@ public class NotificationsFragment extends Fragment {
                 //textView.setText(s);
                 if (file != null) {
                     uploadPhotoView.setText(file.getName());
+                }
+            }
+        });
+
+        final Button submit = root.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: switch to next screen
+                Activity activity = getActivity();
+                if (activity != null && activity instanceof MainActivity) {
+                    ((MainActivity) activity).saveUploadDocumentsData(
+                            notificationsViewModel.getVisaDetails().getValue(),
+                            notificationsViewModel.getIdFile().getValue(),
+                            notificationsViewModel.getPhotoFile().getValue());
+                    ((MainActivity) activity).switchToNextTab(R.id.navigation_notifications);
                 }
             }
         });

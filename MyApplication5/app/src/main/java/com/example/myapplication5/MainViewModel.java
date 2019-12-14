@@ -17,6 +17,8 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<VisaDetails> visaDetails;
     private MutableLiveData<FileDetails> idFile;
     private MutableLiveData<FileDetails> photoFile;
+    private MutableLiveData<String> payResult;
+    private MutableLiveData<Boolean> isPaymentDone;
 
     public MainViewModel() {
         bookingId = new MutableLiveData<>();
@@ -25,6 +27,8 @@ public class MainViewModel extends ViewModel {
         visaDetails = new MutableLiveData<>();
         idFile = new MutableLiveData<>();
         photoFile = new MutableLiveData<>();
+        payResult = new MutableLiveData<>();
+        isPaymentDone = new MutableLiveData<>();
         //mText.setValue("This is home fragment");
     }
 
@@ -74,5 +78,21 @@ public class MainViewModel extends ViewModel {
 
     public void setPhotoFile(FileDetails photoFile) {
         this.photoFile.setValue(photoFile);
+    }
+
+    public MutableLiveData<String> getPayResult() {
+        return payResult;
+    }
+
+    public void setPayResult(String payResult) {
+        this.payResult.setValue(payResult);
+    }
+
+    public MutableLiveData<Boolean> getIsPaymentDone() {
+        return isPaymentDone;
+    }
+
+    public void setIsPaymentDone(boolean isPaymentDone) {
+        this.isPaymentDone.setValue(isPaymentDone);
     }
 }
