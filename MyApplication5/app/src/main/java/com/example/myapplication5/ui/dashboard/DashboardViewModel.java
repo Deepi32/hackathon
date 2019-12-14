@@ -50,9 +50,11 @@ public class DashboardViewModel extends ViewModel {
     private void addDummyData() {
         ArrayList<SimDetails> dummyData = new ArrayList<>();
         dummyData.add(new SimDetails(1, "Airtel", "3G", "Rs 250/-",
-                "Unlimited", "5GB", "1 month"));
+                "Unlimited", "5GB", "1 month", "High data package",
+                true));
         dummyData.add(new SimDetails(2, "Vodafone", "4G", "Rs 250/-",
-                "Unlimited", "3GB", "1 month"));
+                "Unlimited", "3GB", "1 month", "Average data package",
+                true));
         setSimList(dummyData);
     }
 }

@@ -14,4 +14,6 @@
     <string name="visa_issued">Visa issued</string>
     <string name="upload_identity_proof">Upload identity proof</string>
     <string name="upload_your_photo">Upload your photo</string>
+
+    <string name="booking_details">Booking details</string>
 </resources>
