@@ -1,4 +1,4 @@
-package com.example.myapplication5.ui.home;
+package com.example.myapplication5.ui.payment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -26,12 +26,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication5.MainActivity;
 import com.example.myapplication5.R;
 import com.example.myapplication5.model.BookingDetails;
+import com.example.myapplication5.ui.home.HomeViewModel;
 import com.example.myapplication5.utils.Consts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomeFragment extends Fragment {
+public class PaymentFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
@@ -145,7 +146,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurs
-                        Toast.makeText(HomeFragment.this.getContext(),
+                        Toast.makeText(PaymentFragment.this.getContext(),
                                 error.getMessage(), Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }

@@ -1,4 +1,4 @@
-package com.example.myapplication5.ui.home;
+package com.example.myapplication5.ui.payment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication5.model.BookingDetails;
 
-public class HomeViewModel extends ViewModel {
+public class PaymentViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     private MutableLiveData<BookingDetails> bookingDetails;
 
-    public HomeViewModel() {
+    public PaymentViewModel() {
         mText = new MutableLiveData<>();
         bookingDetails = new MutableLiveData<>();
         //mText.setValue("This is home fragment");
