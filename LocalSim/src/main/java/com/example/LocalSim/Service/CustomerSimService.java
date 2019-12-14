@@ -137,7 +137,7 @@ public class CustomerSimService {
         customerDetailsEntity.setVerificationCode(generateVerificationCode(customerId));
         customerDetailsRepository.save(customerDetailsEntity);
 
-        return BaseResponse.builder().status(HttpStatus.OK.value()).message("Your payment has been successful").build();
+        return BaseResponse.builder().status(HttpStatus.OK.value()).message("Your payment has been successful.").build();
     }
 
     private CustomerDetailsEntity getCustomerDetails(Integer customerId) {
