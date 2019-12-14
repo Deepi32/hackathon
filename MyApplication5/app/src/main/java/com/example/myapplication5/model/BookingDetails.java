@@ -1,26 +1,36 @@
 package com.example.myapplication5.model;
 
+import androidx.annotation.NonNull;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class BookingDetails extends JsonClass {
 
     private int id;
+    private String bookingId;
     private String passengerName;
     private String bookingFrom;
     private String bookingTo;
     private String startTime;
     private String endTime;
     private String destinationCountry;
+    private UserDetails userDetails;
 
     public BookingDetails() {}
 
-    public BookingDetails(int id, String passengerName, String bookingFrom, String bookingTo,
-                          String startTime, String endTime, String destinationCountry) {
+    public BookingDetails(int id, String bookingId, String passengerName, String bookingFrom,
+                          String bookingTo, String startTime, String endTime,
+                          String destinationCountry, UserDetails userDetails) {
         this.id = id;
+        this.bookingId = bookingId;
         this.passengerName = passengerName;
         this.bookingFrom = bookingFrom;
         this.bookingTo = bookingTo;
         this.startTime = startTime;
         this.endTime = endTime;
         this.destinationCountry = destinationCountry;
+        this.userDetails = userDetails;
     }
 
     public int getId() {
@@ -29,6 +39,14 @@ public class BookingDetails extends JsonClass {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 
     public String getPassengerName() {
@@ -77,5 +95,36 @@ public class BookingDetails extends JsonClass {
 
     public void setDestinationCountry(String destinationCountry) {
         this.destinationCountry = destinationCountry;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
+
+    public void initFrom(JSONObject object) throws JSONException {
+        if (object == null) return;
+        setId(object.getInt("id"));
+        setBookingId(object.getString("bookingId"));
+        setBookingFrom(object.getString("destinationFrom"));
+        setBookingTo(object.getString("destinationTo"));
+        setStartTime(object.getString("startTime"));
+        setEndTime(object.getString("endTime"));
+        UserDetails userDetails = new UserDetails();
+        userDetails.initFrom(object.getJSONObject("user"));
+        setUserDetails(userDetails);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String sTime = getStartTime() != null && !getStartTime().isEmpty() ? getStartTime() : "";
+        String eTime = getEndTime() != null && !getEndTime().isEmpty() ? getEndTime() : "";
+        String userInfo = getUserDetails() != null ? getUserDetails().toString() + "\n" : "";
+        return userInfo + "PNR: " + getBookingId() + " / " + getBookingFrom() /*+ "(" + sTime
+                + ")"*/ + " - " + getBookingTo() /*+ "(" + eTime + ")"*/;
     }
 }
