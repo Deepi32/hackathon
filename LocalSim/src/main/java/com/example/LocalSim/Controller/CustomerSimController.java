@@ -66,4 +66,9 @@ public class CustomerSimController {
 
   }
 
+  @GetMapping(value = "result")
+  public ResponseEntity<?> renderResult(@NotNull @RequestParam("customerId") Integer customerId) {
+    return ResponseEntity.ok(customerSimService.renderResult(customerId));
+  }
+
 }
