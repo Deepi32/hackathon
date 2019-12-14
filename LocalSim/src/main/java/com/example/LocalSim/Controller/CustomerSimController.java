@@ -45,11 +45,25 @@ public class CustomerSimController {
   }
 
   @GetMapping("document/details")
-  public ResponseEntity<?> showDocuments(@NotNull @RequestParam("customerId") Integer customerId)
+  public ResponseEntity<?> showDocuments(@NotNull @RequestParam("simId") Integer simId,
+                                         @RequestParam(name = "bookingId") String bookingId)
   {
 
-    return ResponseEntity.ok(customerSimService.showDocuments(customerId));
+    return ResponseEntity.ok(customerSimService.showDocuments(simId,bookingId));
+  }
+  @PostMapping("payment")
+  public ResponseEntity<?> paymentPaid(@NotNull @RequestParam("customerId") Integer customerId,
+                                       @RequestParam("isPaid")Boolean isPaid)
+  {
+    return ResponseEntity.ok(customerSimService.paymentPaid(customerId,isPaid));
+
   }
 
+  @PostMapping(value = "save/documents")
+  public ResponseEntity<?> saveDocuments(@NotNull @RequestParam("customerId") Integer customerId, @RequestParam("isOnArrivalVisa") boolean isOnArrivalVisa) {
+
+    return ResponseEntity.ok(customerSimService.saveDocuments(customerId, isOnArrivalVisa));
+
+  }
 
 }

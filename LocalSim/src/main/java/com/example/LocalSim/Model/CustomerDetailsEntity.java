@@ -47,6 +47,12 @@ public class CustomerDetailsEntity extends AbstractEntity {
   @Column(name = "is_document_upload")
   private Boolean isDocumentUpload;
 
+  @Column(name = "is_on_arrival_visa")
+  private Boolean isOnArrivalVisa;
+
+  @Column(name="verification_code")
+  private String verificationCode;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="user_id")
   private UserEntity userEntity;
