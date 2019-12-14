@@ -127,7 +127,7 @@ public class CustomerSimService {
 
     public BaseResponse paymentPaid(Integer customerId) {
 
-        Boolean paymentPaid=true;
+         Boolean paymentPaid=true;
         CustomerDetailsEntity customerDetailsEntity = getCustomerDetails(customerId);
         if (paymentPaid == true) {
             customerDetailsEntity.setPaymentStatus(PaymentStatus.PAID);
@@ -136,7 +136,8 @@ public class CustomerSimService {
         }
         customerDetailsEntity.setVerificationCode(generateVerificationCode(customerId));
         customerDetailsRepository.save(customerDetailsEntity);
-        return BaseResponse.builder().status(HttpStatus.OK.value()).build();
+
+        return BaseResponse.builder().status(HttpStatus.OK.value()).message("Your payment has been successful").build();
     }
 
     private CustomerDetailsEntity getCustomerDetails(Integer customerId) {
